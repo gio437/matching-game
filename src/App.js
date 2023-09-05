@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
+import Belgian from "./pictures/belgian.png";
 
 function App() {
   let [picturesArray, setPicturesArray] = useState([1, 2, 3]);
@@ -16,20 +17,18 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Matching Game</h1>
+      <div className='picParent'>
+        <img className='picBox' src={Belgian}></img>
+        <img className='picBox' ></img>
+        <img className='picBox' ></img>
+      </div>
+      <div className='descriptionParent'>
+        <div className='descriptionBox'></div>
+        <div className='descriptionBox'></div>
+        <div className='descriptionBox'></div>
+
+      </div>
     </div>
   );
 }
