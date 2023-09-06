@@ -8,7 +8,6 @@ h1 {
 
 body {
   background-color: darkblue;
-  overflow: hidden; /* this will center the object */
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,21 +25,32 @@ body {
   margin-top: 10rem;
 }
 
+.inputParent {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 10rem;
+}
 
-.descriptionBox {
+#whiteBox {
   height: 20rem;
-  width: 20rem;
+  width: 25rem;
   background-color: white;
   border-width: 1rem;
   border-color: black;
   border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
 }
 
 .picBox {
   height: 20rem;
-  width: 20rem;
+  width: 25rem;
 }
 
 .picParent {
+  display: flex;
   gap: 2rem;
 }
