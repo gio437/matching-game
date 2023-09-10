@@ -8,10 +8,15 @@ import Norwegian from './pictures/norwegian.png';
 import Briard from './pictures/briard.png';
 
 function App() {
-  let [picturesArray, setPicturesArray] = useState([1, 2, 3]);
+  let [picturesArray, setPicturesArray] = useState([0, 1, 2]);
   let [descriptionArray, setDescriptionArray] = useState([]);
 
-  function activateInputBox() {
+  function clickDescription(e) {
+    // useEffect?
+    const clickedBox = e.target.dataset.badges;
+    setDescriptionArray(prev => prev.concat(clickedBox));
+    console.log(descriptionArray);
+
     const inputSquare = document.querySelectorAll('.inputParent');
     inputSquare.forEach(box => {
       box.style.backgroundColor = 'yellow';
@@ -20,9 +25,9 @@ function App() {
 
   function placeDescription() {
     const inputSquare = document.querySelectorAll('.inputParent');
-    inputSquare.forEach(box => {
-      box.style.backgroundColor = 'darkblue';
-    })
+      inputSquare.forEach(box => {
+        box.style.backgroundColor = 'darkblue';
+      })
   }
 
 // add in new descriptions
@@ -33,11 +38,14 @@ function App() {
   }
 
 
-  function endGame() {
-    if (descriptionArray.length === 3) {
-      setDescriptionArray(prev => prev = []);
+    function endGame() {
+      for (let i = 0; i <= 3; i++) {
+        if (picturesArray[i] === descriptionArray[i]) {
+        // useEffect?
+        setDescriptionArray(prev => prev = []);
+      }
     }
-  }
+  } 
 
   // push description id from pic to the description array
 
@@ -54,10 +62,10 @@ function App() {
         <div className='inputBox' id='whiteBox'></div>
         <div className='inputBox' id='whiteBox'></div>
       </div>
-      <div className='descriptionParent' onClick={activateInputBox}>
-        <div className='descriptionBox' id='whiteBox'>{descriptions.norwegianDescription}</div>
-        <div className='descriptionBox' id='whiteBox'>{descriptions.belgianDescription}</div>
-        <div className='descriptionBox' id='whiteBox'>{descriptions.briardDescription}</div>
+      <div className='descriptionParent' onClick={(e) => clickDescription(e)}>
+        <div className='descriptionBox' id='whiteBox'  data-badges='0'>{descriptions.norwegianDescription}</div>
+        <div className='descriptionBox' id='whiteBox'  data-badges='1'>{descriptions.belgianDescription}</div>
+        <div className='descriptionBox' id='whiteBox'  data-badges='2'>{descriptions.briardDescription}</div>
       </div>
     </div>
   );
