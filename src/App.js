@@ -6,16 +6,17 @@ import Belgian from "./pictures/belgian.png";
 // import Otterhound from './pictures/otterhound.png';
 import Norwegian from './pictures/norwegian.png';
 import Briard from './pictures/briard.png';
+import React from 'react';
 
 function App() {
-  let [picturesArray, setPicturesArray] = useState([0, 1, 2]);
-  let [descriptionArray, setDescriptionArray] = useState([]);
+  let [picturesArray, setPicturesArray] = useState([1, 0, 2]);
+  let [description, setDescription] = useState(-1);
+  let [fillArray, setFillArray] = useState([]);
 
   function clickDescription(e) {
-    // useEffect?
-    const clickedBox = e.target.dataset.badges;
-    setDescriptionArray(prev => prev.concat(clickedBox));
-    console.log(descriptionArray);
+    // make sure u can
+    const clickedBox = parseInt(e.target.dataset.badges);
+    setDescription(prev => prev = clickedBox);
 
     const inputSquare = document.querySelectorAll('.inputParent');
     inputSquare.forEach(box => {
@@ -23,7 +24,16 @@ function App() {
     })
   }
 
-  function placeDescription() {
+  function placeDescription(e) {
+    const clickedFillBox = parseInt(e.target.dataset.badges);
+    // add the description to its appropriate box => 
+    if (description > -1) {
+      console.log(description);
+      console.log(clickedFillBox);
+      fillArray.splice(clickedFillBox, 1, description);
+      endGame();
+    }
+    console.log(fillArray);
     const inputSquare = document.querySelectorAll('.inputParent');
       inputSquare.forEach(box => {
         box.style.backgroundColor = 'darkblue';
@@ -37,12 +47,21 @@ function App() {
     briardDescription: "a French breed of large shepherd dog, traditionally used both for herding sheep and to defend them. It was first shown at the first Paris dog show, in 1863; the first Briard to be registered in the Livre des Origines Francaises, the national stud-book, was Sans Gene in 1885. It was in the past also known as the Chien de Berger francais de Plaine."
   }
 
+  // ability to add as many new matching cards as you want
+  function createPics() {
+    const pictureParent = document.querySelector('.picParent');
+    const pictures = {
+      
+    }
+  }
+
 
     function endGame() {
       for (let i = 0; i <= 3; i++) {
-        if (picturesArray[i] === descriptionArray[i]) {
+        if (picturesArray[i] === fillArray[i] && fillArray.length === 3) {
         // useEffect?
-        setDescriptionArray(prev => prev = []);
+        setDescription(prev => prev = -1);
+        console.log('end');
       }
     }
   } 
@@ -58,9 +77,9 @@ function App() {
         <img className='picBox' src={Briard}></img>
       </div>
       <div className='inputParent' onClick={placeDescription}>
-        <div className='inputBox' id='whiteBox'></div>
-        <div className='inputBox' id='whiteBox'></div>
-        <div className='inputBox' id='whiteBox'></div>
+        <div className='inputBox' id='whiteBox'  data-badges='0'></div>
+        <div className='inputBox' id='whiteBox'  data-badges='1'></div>
+        <div className='inputBox' id='whiteBox'  data-badges='2'></div>
       </div>
       <div className='descriptionParent' onClick={(e) => clickDescription(e)}>
         <div className='descriptionBox' id='whiteBox'  data-badges='0'>{descriptions.norwegianDescription}</div>
