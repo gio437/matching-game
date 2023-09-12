@@ -9,7 +9,7 @@ import Briard from './pictures/briard.png';
 import React from 'react';
 
 function App() {
-  let [picturesArray, setPicturesArray] = useState([1, 0, 2]);
+  let [picturesArray, setPicturesArray] = useState([1, 0, 2]); // correct pattern of numbers
   let [description, setDescription] = useState(-1);
   let [fillArray, setFillArray] = useState([]);
 
@@ -57,12 +57,10 @@ function App() {
 
 
     function endGame() {
-      for (let i = 0; i <= 3; i++) {
-        if (picturesArray[i] === fillArray[i] && fillArray.length === 3) {
+        if (picturesArray.every((value, index) => value === fillArray[index])) {
         // useEffect?
         setDescription(prev => prev = -1);
         console.log('end');
-      }
     }
   } 
 
