@@ -40,28 +40,67 @@ function App() {
       })
   }
 
-// add in new descriptions
-  const descriptions = {
-    norwegianDescription: "A small dog breed of the Spitz type that originates from Norway. Its name is a compound noun composed of the elements lunde, meaning puffin (Norwegian lunde, puffin, or lundefugl, puffin bird), and hund, meaning dog. The breed was originally developed for the hunting of puffins and their eggs on inaccessible nesting places in caves and on cliffs. The breed was at the brink of extinction in the 1960s and preservation efforts have since been underway.",
-    belgianDescription: "A breed of medium-sized herding dog from Belgium. While predominantly considered a single breed, it is bred in four distinct varieties based on coat type and colour; the long-haired black Groenendael, the rough-haired fawn Laekenois, the short-haired fawn Malinois, and the long-haired fawn Tervuren. In the United States, the American Kennel Club considers the four varieties to be separate breeds.",
-    briardDescription: "a French breed of large shepherd dog, traditionally used both for herding sheep and to defend them. It was first shown at the first Paris dog show, in 1863; the first Briard to be registered in the Livre des Origines Francaises, the national stud-book, was Sans Gene in 1885. It was in the past also known as the Chien de Berger francais de Plaine."
-  }
+  // add src and description to add new cards
+    const sections = [
+      {
+        src: '/static/media/belgian.4f1cecef3601af8210eb.png',
+        description: "A breed of medium-sized herding dog from Belgium. While predominantly considered a single breed, it is bred in four distinct varieties based on coat type and colour; the long-haired black Groenendael, the rough-haired fawn Laekenois, the short-haired fawn Malinois, and the long-haired fawn Tervuren. In the United States, the American Kennel Club considers the four varieties to be separate breeds." 
+      },
+      {
+        src: '/static/media/norwegian.8845dd09d6395748df6a.png', // test before adding more 
+        description: "A dog breed of the Spitz type that originates from Norway. Its name is a compound noun composed of the elements lunde, meaning puffin (Norwegian lunde, puffin, or lundefugl, puffin bird), and hund, meaning dog. The breed was originally developed for the hunting of puffins and their eggs on inaccessible nesting places in caves and on cliffs. The breed was at the brink of extinction in the 1960s and preservation efforts have since been underway."
+      },
+      {
+        src: '/static/media/briard.5c731a35a9435a6b6a8b.png',
+        description: "a French breed of large shepherd dog, traditionally used both for herding sheep and to defend them. It was first shown at the first Paris dog show, in 1863; the first Briard to be registered in the Livre des Origines Francaises, the national stud-book, was Sans Gene in 1885. It was in the past also known as the Chien de Berger francais de Plaine."
+      }
+    ];
 
-  // ability to add as many new matching cards as you want
-  function createPics() {
-    const pictureParent = document.querySelector('.picParent');
-    const pictures = {
-      
-    }
-  }
+  
+    // randomize game cards
+  function createImages() { 
+      for (let i = 0; i < sections.length; i++) {
+        console.log(sections[i].src);
+        let eachItem = sections[i].src;
+        const picParent = document.querySelector('.picParent');
 
+        createFillBoxes(i);
+
+        const newPic = document.createElement('img');
+        newPic.src = eachItem;
+        console.log(newPic)
+        newPic.classList.add('picBox');
+        newPic.id = 'whiteBox';
+        picParent.appendChild(newPic);
+      }
+  }
+   setTimeout(createImages, 200);
+
+   function createFillBoxes(i) {
+    const fillBoxes = document.querySelector('.inputParent');
+    const newFillBox = document.createElement('div');
+    newFillBox.id = 'whiteBox';
+    newFillBox.setAttribute('data-badges', i);
+    fillBoxes.append(newFillBox);
+    createDescriptions(i);
+   }
+
+   function createDescriptions(i) {
+      const descriptionText = sections[i].description;
+      const descriptionParent = document.querySelector('.descriptionParent');
+      const descriptionBox = document.createElement('div');
+      descriptionBox.innerHTML = descriptionText;
+      descriptionBox.id = 'whiteBox';
+      descriptionBox.setAttribute('data-badges', i);
+      descriptionParent.append(descriptionBox);
+   }
 
     function endGame() {
-        if (picturesArray.every((value, index) => value === fillArray[index])) {
+      if (picturesArray.every((value, index) => value === fillArray[index])) {
         // useEffect?
         setDescription(prev => prev = -1);
         console.log('end');
-    }
+      }
   } 
 
   // push description id from pic to the description array
@@ -70,19 +109,10 @@ function App() {
     <div className="App">
       <h1>Matching Game</h1>
       <div className='picParent'>
-        <img className='picBox' src={Belgian}></img>
-        <img className='picBox' src={Norwegian}></img>
-        <img className='picBox' src={Briard}></img>
       </div>
-      <div className='inputParent' onClick={placeDescription}>
-        <div className='inputBox' id='whiteBox'  data-badges='0'></div>
-        <div className='inputBox' id='whiteBox'  data-badges='1'></div>
-        <div className='inputBox' id='whiteBox'  data-badges='2'></div>
+      <div className='inputParent' onClick={(e) => placeDescription(e)}>
       </div>
       <div className='descriptionParent' onClick={(e) => clickDescription(e)}>
-        <div className='descriptionBox' id='whiteBox'  data-badges='0'>{descriptions.norwegianDescription}</div>
-        <div className='descriptionBox' id='whiteBox'  data-badges='1'>{descriptions.belgianDescription}</div>
-        <div className='descriptionBox' id='whiteBox'  data-badges='2'>{descriptions.briardDescription}</div>
       </div>
     </div>
   );
