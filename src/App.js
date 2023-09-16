@@ -1,11 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState, useRef, createRef } from 'react';
-import Belgian from "./pictures/belgian.png";
 // import Tibetan from './pictures/tibetan.png';
-// import Otterhound from './pictures/otterhound.png';
-import Norwegian from './pictures/norwegian.png';
-import Briard from './pictures/briard.png';
 import React from 'react';
 
 function App() {
@@ -16,14 +11,15 @@ function App() {
 
   // change to use effect
   function clickDescription(e) {
-    // make sure u can
     const clickedBox = parseInt(e.target.dataset.badges);
-    setDescription(prev => prev = clickedBox);
+    if (!fillArray.includes(clickedBox)) {
+      setDescription(prev => prev = clickedBox);
 
-    const inputSquare = document.querySelectorAll('.inputParent');
-      inputSquare.forEach(box => {
-      box.style.backgroundColor = 'yellow';
-    })
+      const inputSquare = document.querySelectorAll('.inputParent');
+        inputSquare.forEach(box => {
+        box.style.backgroundColor = 'yellow';
+      })
+    }
   }
 
   // useEffect(() => {
@@ -35,57 +31,61 @@ function App() {
     const clickedFillBox = parseInt(e.target.dataset.badges);
     const clickedElement = e.target;
     // add the description to its appropriate box => 
-    if (description > -1) {
+    if (description > -1 && !fillArray.includes(description)) {
       console.log(description);
       console.log(clickedFillBox);
-      fillArray.splice(clickedFillBox, 1, description);
+      fillArray.splice(clickedFillBox, 0, description);
       endGame();
+    
+      const inputSquare = document.querySelectorAll('.inputParent');
+        inputSquare.forEach(box => {
+          box.style.backgroundColor = 'rgb(0, 107, 139)';
+        })
+      // displays description in clicked empty box
+      console.log(fillArray);
+      clickedElement.innerHTML = clickedDescription.innerHTML;
+      clickedDescription.innerHTML = '';
     }
-    console.log(fillArray);
-    const inputSquare = document.querySelectorAll('.inputParent');
-      inputSquare.forEach(box => {
-        box.style.backgroundColor = 'cyan';
-      })
-    // displays description in clicked empty box
-    console.log(clickedDescription);
-    clickedElement.innerHTML = clickedDescription.innerHTML;
   }
 
-  // add src and description to add new cards
+      // add src and description to add new cards
     const sections = [
+      // objects will be placed in order in the array, change order in the pictures array to match the objects
+      // descriptions are switched around
       {
         src: '/static/media/belgian.4f1cecef3601af8210eb.png',
-        description: "A breed of medium-sized herding dog from Belgium. While predominantly considered a single breed, it is bred in four distinct varieties based on coat type and colour; the long-haired black Groenendael, the rough-haired fawn Laekenois, the short-haired fawn Malinois, and the long-haired fawn Tervuren. In the United States, the American Kennel Club considers the four varieties to be separate breeds." 
-      },
+        description:"A Spitz-type dog breed from Norway, initially bred for hunting puffins and their eggs in hard-to-reach places like caves and cliffs. Its name, a compound of 'lunde' (meaning puffin) and 'hund' (meaning dog), reflects its heritage. While facing near-extinction in the 1960s, preservation efforts have since been ongoing."
+      }, // fill the array with the description number? description number = 1
       {
         src: '/static/media/norwegian.8845dd09d6395748df6a.png', // test before adding more 
-        description: "A dog breed of the Spitz type that originates from Norway. Its name is a compound noun composed of the elements lunde, meaning puffin (Norwegian lunde, puffin, or lundefugl, puffin bird), and hund, meaning dog. The breed was originally developed for the hunting of puffins and their eggs on inaccessible nesting places in caves and on cliffs. The breed was at the brink of extinction in the 1960s and preservation efforts have since been underway."
+        description: "This Belgian herding breed comes in four distinct varieties, each with different coat types and colors: long-haired black, rough-haired fawn, short-haired fawn, and long-haired fawn. In the United States, these varieties are considered separate breeds by the American Kennel Club."
       },
       {
         src: '/static/media/briard.5c731a35a9435a6b6a8b.png',
-        description: "a French breed of large shepherd dog, traditionally used both for herding sheep and to defend them. It was first shown at the first Paris dog show, in 1863; the first Briard to be registered in the Livre des Origines Francaises, the national stud-book, was Sans Gene in 1885. It was in the past also known as the Chien de Berger francais de Plaine."
+        description: "This French shepherd dog has a long history, originally bred for herding and protecting sheep. It made its debut at the 1863 Paris dog show and was first registered in the national stud-book in 1885. In the past, it was also known as the French Plains Shepherd."
       }
     ];
 
-  
+  let [cardDisplay, setCardDisplay] = useState(false);
     // randomize game cards
   function createImages() { 
-      for (let i = 0; i < sections.length; i++) {
-        console.log(sections[i].src);
-        let eachItem = sections[i].src;
-        const picParent = document.querySelector('.picParent');
-
-        createFillBoxes(i);
-
-        const newPic = document.createElement('img');
-        newPic.src = eachItem;
-        console.log(newPic)
-        newPic.classList.add('picBox');
-        newPic.id = 'whiteBox';
-        picParent.appendChild(newPic);
+     if (cardDisplay === false) {
+        for (let i = 0; i < sections.length; i++) {
+          console.log(sections[i].src);
+          let eachItem = sections[i].src;
+          createFillBoxes(i);
+          const picParent = document.querySelector('.picParent');
+          const newPic = document.createElement('img');
+          newPic.src = eachItem;
+          console.log(newPic)
+          newPic.classList.add('picBox');
+          newPic.id = 'whiteBox';
+          picParent.appendChild(newPic);
+          setCardDisplay(prev => prev = true);
+        }
       }
   }
-   setTimeout(createImages, 200);
+  setTimeout(createImages, 200);
 
    function createFillBoxes(i) {
     const fillBoxes = document.querySelector('.inputParent');
@@ -110,22 +110,40 @@ function App() {
     function endGame() {
       if (picturesArray.every((value, index) => value === fillArray[index])) {
         // useEffect?
-        setDescription(prev => prev = -1);
-        console.log('end');
+        console.log('win');
+        endDisplay();
+        const counter = document.querySelector('.winLossCounter');
+        counter.textContent = 'Full Match!';
+      }
+      else if (fillArray.length === 3) {
+        console.log('loss');
+        endDisplay();
       }
   } 
+
+    function endDisplay() {
+      const endParent = document.querySelector('.endGameDisplay');
+      const endButton = document.createElement('button');
+      endButton.innerHTML += '<span>Restart</span>';
+      endButton.classList.add('endButton');
+      endParent.appendChild(endButton);
+
+      endButton.addEventListener('click', () => {
+        setDescription(prev => prev = -1);
+        setFillArray(prev => prev = []);
+        window.location.reload();
+      })
+    }
 
   // push description id from pic to the description array
 
   return (
     <div className="App">
-      <h1>Matching Game</h1>
-      <div className='picParent'>
-      </div>
-      <div className='inputParent' onClick={(e) => placeDescription(e)}>
-      </div>
-      <div className='descriptionParent' onClick={(e) => clickDescription(e)}>
-      </div>
+      <h1 className='winLossCounter'>Matching Game</h1>
+      <div className='picParent'></div>
+      <div className='inputParent' onClick={(e) => placeDescription(e)}></div>
+      <div className='descriptionParent' onClick={(e) => clickDescription(e)}></div>
+      <div className='endGameDisplay'></div>
     </div>
   );
 }
