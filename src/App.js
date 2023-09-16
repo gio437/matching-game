@@ -13,19 +13,27 @@ function App() {
   let [description, setDescription] = useState(-1);
   let [fillArray, setFillArray] = useState([]);
 
+
+  // change to use effect
   function clickDescription(e) {
     // make sure u can
     const clickedBox = parseInt(e.target.dataset.badges);
     setDescription(prev => prev = clickedBox);
 
     const inputSquare = document.querySelectorAll('.inputParent');
-    inputSquare.forEach(box => {
+      inputSquare.forEach(box => {
       box.style.backgroundColor = 'yellow';
     })
   }
 
+  // useEffect(() => {
+
+  // }, description);
+
   function placeDescription(e) {
+    const clickedDescription = document.querySelector('[data-badges="' + description + '"].descriptionBox');
     const clickedFillBox = parseInt(e.target.dataset.badges);
+    const clickedElement = e.target;
     // add the description to its appropriate box => 
     if (description > -1) {
       console.log(description);
@@ -36,8 +44,11 @@ function App() {
     console.log(fillArray);
     const inputSquare = document.querySelectorAll('.inputParent');
       inputSquare.forEach(box => {
-        box.style.backgroundColor = 'darkblue';
+        box.style.backgroundColor = 'cyan';
       })
+    // displays description in clicked empty box
+    console.log(clickedDescription);
+    clickedElement.innerHTML = clickedDescription.innerHTML;
   }
 
   // add src and description to add new cards
@@ -89,6 +100,7 @@ function App() {
       const descriptionText = sections[i].description;
       const descriptionParent = document.querySelector('.descriptionParent');
       const descriptionBox = document.createElement('div');
+      descriptionBox.classList.add('descriptionBox')
       descriptionBox.innerHTML = descriptionText;
       descriptionBox.id = 'whiteBox';
       descriptionBox.setAttribute('data-badges', i);
