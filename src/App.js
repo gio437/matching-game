@@ -48,6 +48,7 @@ console.log(Tibetan);
   }
 
       // add src and description to add new cards
+      // *for challenge mode, give the objects a challenge attribute, than make a function with a conditional statemant to only upload the objects marked challenge
     const sections = [
       // objects will be placed in order in the array, change order in the pictures array to match the objects
       // descriptions are switched around
