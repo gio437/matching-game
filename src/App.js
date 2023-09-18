@@ -56,11 +56,11 @@ console.log(Tibetan);
         description:"Hailing from the Himalayas, known for its elegant long coat. Historically, a guardian and companion, it's intelligent and independent. Treasured for its unique Tibetan heritage."
       }, // fill the array with the description number? description number = 1
       {
-        src: 'matching-game/static/media/tibetan.b8047b732bc4595bd38f.png', // test before adding more 
+        src: '/matching-game/static/media/tibetan.b8047b732bc4595bd38f.png', // test before adding more 
         description: "Originating from Europe, embodies strength and adaptability. Intelligent and versatile. Cherished for its unique qualities, a testament to Belgian origins."
       },
       {
-        src: 'matching-game/static/media/briard.5c731a35a9435a6b6a8b.png',
+        src: '/matching-game/static/media/briard.5c731a35a9435a6b6a8b.png',
         description: "A breed from France, known for strength and a distinctive double coat. Historically excelled in herding and guarding. Intelligent and loyal, cherished by those valuing unique qualities."
       }
     ];
