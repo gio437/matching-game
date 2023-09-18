@@ -1,14 +1,17 @@
 import './App.css';
 import { useEffect, useState, useRef, createRef } from 'react';
-// import Tibetan from './pictures/tibetan.png';
+import Tibetan from './pictures/tibetan.png';
 import React from 'react';
+import Briard from './pictures/briard.png';
+import Norwegian from './pictures/norwegian.png';
+import Belgian from './pictures/belgian.png';
 
 function App() {
   let [picturesArray, setPicturesArray] = useState([1, 0, 2]); // correct pattern of numbers
   let [description, setDescription] = useState(-1);
   let [fillArray, setFillArray] = useState([]);
 
-
+console.log(Tibetan);
   // change to use effect
   function clickDescription(e) {
     const clickedBox = parseInt(e.target.dataset.badges);
@@ -54,15 +57,15 @@ function App() {
       // descriptions are switched around
       {
         src: '/static/media/belgian.4f1cecef3601af8210eb.png',
-        description:"A Spitz-type dog breed from Norway, initially bred for hunting puffins and their eggs in hard-to-reach places like caves and cliffs. Its name, a compound of 'lunde' (meaning puffin) and 'hund' (meaning dog), reflects its heritage. While facing near-extinction in the 1960s, preservation efforts have since been ongoing."
+        description:"Hailing from the Himalayas, known for its elegant long coat. Historically, a guardian and companion, it's intelligent and independent. Treasured for its unique Tibetan heritage."
       }, // fill the array with the description number? description number = 1
       {
-        src: '/static/media/norwegian.8845dd09d6395748df6a.png', // test before adding more 
-        description: "This Belgian herding breed comes in four distinct varieties, each with different coat types and colors: long-haired black, rough-haired fawn, short-haired fawn, and long-haired fawn. In the United States, these varieties are considered separate breeds by the American Kennel Club."
+        src: '/static/media/tibetan.b8047b732bc4595bd38f.png', // test before adding more 
+        description: "Originating from Europe, embodies strength and adaptability. Intelligent and versatile. Cherished for its unique qualities, a testament to Belgian origins."
       },
       {
         src: '/static/media/briard.5c731a35a9435a6b6a8b.png',
-        description: "This French shepherd dog has a long history, originally bred for herding and protecting sheep. It made its debut at the 1863 Paris dog show and was first registered in the national stud-book in 1885. In the past, it was also known as the French Plains Shepherd."
+        description: "A breed from France, known for strength and a distinctive double coat. Historically excelled in herding and guarding. Intelligent and loyal, cherished by those valuing unique qualities."
       }
     ];
 
@@ -108,16 +111,17 @@ function App() {
    }
 
     function endGame() {
+      const counter = document.querySelector('.winLossCounter');
       if (picturesArray.every((value, index) => value === fillArray[index])) {
         // useEffect?
         console.log('win');
         endDisplay();
-        const counter = document.querySelector('.winLossCounter');
         counter.textContent = 'Full Match!';
       }
       else if (fillArray.length === 3) {
         console.log('loss');
         endDisplay();
+        counter.textContent = 'Try Again!';
       }
   } 
 
