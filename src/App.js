@@ -1,5 +1,5 @@
 import './App.css';
-import {useState,} from 'react';
+import {useState} from 'react';
 import Tibetan from './pictures/tibetan.png';
 import React from 'react';
 import Briard from './pictures/briard.png';
@@ -7,7 +7,7 @@ import Norwegian from './pictures/norwegian.png';
 import Belgian from './pictures/belgian.png';
 
 function App() {
-  let [picturesArray, setPicturesArray] = useState([1, 0, 2]); // correct pattern of numbers
+  let [picturesArray] = useState([1, 0, 2]); // correct pattern of numbers
   let [description, setDescription] = useState(-1);
   let [fillArray, setFillArray] = useState([]);
 
@@ -52,15 +52,15 @@ console.log(Tibetan);
       // objects will be placed in order in the array, change order in the pictures array to match the objects
       // descriptions are switched around
       {
-        src: '/static/media/belgian.4f1cecef3601af8210eb.png',
+        src: '/matching-game/static/media/belgian.4f1cecef3601af8210eb.png',
         description:"Hailing from the Himalayas, known for its elegant long coat. Historically, a guardian and companion, it's intelligent and independent. Treasured for its unique Tibetan heritage."
       }, // fill the array with the description number? description number = 1
       {
-        src: '/static/media/tibetan.b8047b732bc4595bd38f.png', // test before adding more 
+        src: 'matching-game/static/media/tibetan.b8047b732bc4595bd38f.png', // test before adding more 
         description: "Originating from Europe, embodies strength and adaptability. Intelligent and versatile. Cherished for its unique qualities, a testament to Belgian origins."
       },
       {
-        src: '/static/media/briard.5c731a35a9435a6b6a8b.png',
+        src: 'matching-game/static/media/briard.5c731a35a9435a6b6a8b.png',
         description: "A breed from France, known for strength and a distinctive double coat. Historically excelled in herding and guarding. Intelligent and loyal, cherished by those valuing unique qualities."
       }
     ];
