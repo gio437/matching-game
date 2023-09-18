@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState, useRef, createRef } from 'react';
+import {useState,} from 'react';
 import Tibetan from './pictures/tibetan.png';
 import React from 'react';
 import Briard from './pictures/briard.png';
@@ -24,10 +24,6 @@ console.log(Tibetan);
       })
     }
   }
-
-  // useEffect(() => {
-
-  // }, description);
 
   function placeDescription(e) {
     const clickedDescription = document.querySelector('[data-badges="' + description + '"].descriptionBox');
