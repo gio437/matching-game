@@ -68,12 +68,12 @@ console.log(Tibetan);
 
   let [cardDisplay, setCardDisplay] = useState(false);
     // randomize game cards
-  function createImages() { 
+  function createImages(cardArr) { 
      if (cardDisplay === false) {
-        for (let i = 0; i < sections.length; i++) {
-          console.log(sections[i].src);
-          let eachItem = sections[i].src;
-          createFillBoxes(i);
+        for (let i = 0; i < cardArr.length; i++) {
+          console.log(cardArr[i].src);
+          let eachItem = cardArr[i].src;
+          createFillBoxes(i, cardArr);
           const picParent = document.querySelector('.picParent');
           const newPic = document.createElement('img');
           newPic.src = eachItem;
@@ -85,19 +85,20 @@ console.log(Tibetan);
         }
       }
   }
-  setTimeout(createImages, 200);
+  // input desired array into parameter, which willow display desired cards and descriptions => 
+  setTimeout(() => createImages(sections), 200);
 
-   function createFillBoxes(i) {
+   function createFillBoxes(i, cardArr) {
     const fillBoxes = document.querySelector('.inputParent');
     const newFillBox = document.createElement('div');
     newFillBox.id = 'whiteBox';
     newFillBox.setAttribute('data-badges', i);
     fillBoxes.append(newFillBox);
-    createDescriptions(i);
+    createDescriptions(i, cardArr);
    }
 
-   function createDescriptions(i) {
-      const descriptionText = sections[i].description;
+   function createDescriptions(i, cardArr) {
+      const descriptionText = cardArr[i].description;
       const descriptionParent = document.querySelector('.descriptionParent');
       const descriptionBox = document.createElement('div');
       descriptionBox.classList.add('descriptionBox')
