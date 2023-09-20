@@ -7,7 +7,7 @@ import Norwegian from './pictures/norwegian.png';
 import Belgian from './pictures/belgian.png';
 
 function App() {
-  let [picturesArray] = useState([1, 0, 2]); // correct pattern of numbers
+  let [picturesArray, setPicturesArray] = useState([]); // correct pattern of numbers
   let [description, setDescription] = useState(-1);
   let [fillArray, setFillArray] = useState([]);
 
@@ -68,24 +68,40 @@ console.log(Tibetan);
 
   let [cardDisplay, setCardDisplay] = useState(false);
     // randomize game cards
-  function createImages() { 
+    // use call back for paramater => sectionCall();
+  function startBoxCreation() { 
      if (cardDisplay === false) {
         for (let i = 0; i < sections.length; i++) {
           console.log(sections[i].src);
-          let eachItem = sections[i].src;
           createFillBoxes(i);
-          const picParent = document.querySelector('.picParent');
-          const newPic = document.createElement('img');
-          newPic.src = eachItem;
-          console.log(newPic)
-          newPic.classList.add('picBox');
-          newPic.id = 'whiteBox';
-          picParent.appendChild(newPic);
           setCardDisplay(prev => prev = true);
+          // randomizeImages();
         }
       }
   }
-  setTimeout(createImages, 200);
+  setTimeout(startBoxCreation, 200);
+
+  // pass in arr instead of sections for challenge mode 
+  function randomizeImages(arr) {
+    const random = Math.floor(Math.random() * sections.length);
+    if (!picturesArray.includes(random)) {
+        let eachItem = sections[random].src;
+        const picParent = document.querySelector('.picParent');
+        const newPic = document.createElement('img');
+        console.log(random);
+        console.log(picturesArray);
+        newPic.src = eachItem;
+        console.log(newPic);
+        newPic.classList.add('picBox');
+        newPic.id = 'whiteBox';
+        picParent.appendChild(newPic);
+
+        setPicturesArray([...picturesArray, random]);
+    }
+    else {
+      randomizeImages();
+    }
+  }
 
    function createFillBoxes(i) {
     const fillBoxes = document.querySelector('.inputParent');
@@ -145,6 +161,7 @@ console.log(Tibetan);
       <div className='inputParent' onClick={(e) => placeDescription(e)}></div>
       <div className='descriptionParent' onClick={(e) => clickDescription(e)}></div>
       <div className='endGameDisplay'></div>
+      <button onClick={(arr) => randomizeImages(arr)}>Hello</button>
     </div>
   );
 }
