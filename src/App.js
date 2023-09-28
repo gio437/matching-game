@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Tibetan from './pictures/tibetan.png';
 import React from 'react';
 import Briard from './pictures/briard.png';
@@ -17,6 +17,7 @@ console.log(Tibetan);
     const clickedBox = parseInt(e.target.dataset.badges);
     if (!fillArray.includes(clickedBox)) {
       setDescription(prev => prev = clickedBox);
+      console.log(description);
 
       const inputSquare = document.querySelectorAll('.inputParent');
         inputSquare.forEach(box => {
@@ -30,22 +31,31 @@ console.log(Tibetan);
     const clickedFillBox = parseInt(e.target.dataset.badges);
     const clickedElement = e.target;
     // add the description to its appropriate box => 
-    if (description > -1 && !fillArray.includes(description)) {
+    // need to figure solution to adding description on top of another description, either put objects in specific index or change conditional
+    if (description > -1 && fillArray[clickedFillBox] === undefined) {
       console.log(description);
       console.log(clickedFillBox);
-      fillArray.splice(clickedFillBox, 0, description);
-      endGame();
+      const updatedFillArray = [...fillArray];
+      // updatedFillArray.splice(clickedFillBox, 0, description);
+      updatedFillArray[clickedFillBox] = description;
+      setFillArray(updatedFillArray);
     
       const inputSquare = document.querySelectorAll('.inputParent');
         inputSquare.forEach(box => {
           box.style.backgroundColor = 'rgb(0, 107, 139)';
         })
       // displays description in clicked empty box
-      console.log(fillArray);
       clickedElement.innerHTML = clickedDescription.innerHTML;
       clickedDescription.innerHTML = '';
+
+      // array needs to place description in the correct spot (correct splice)
     }
   }
+
+  useEffect(() => {
+    console.log(fillArray);
+    endGame();
+  }, [fillArray])
 
       // add src and description to add new cards
       // *for challenge mode, give the objects a challenge attribute, than make a function with a conditional statemant to only upload the objects marked challenge
