@@ -5,6 +5,7 @@ import React from 'react';
 import Briard from './pictures/briard.png';
 import Norwegian from './pictures/norwegian.png';
 import Belgian from './pictures/belgian.png';
+import { type } from '@testing-library/user-event/dist/type';
 
 function App() {
   let [picturesArray] = useState([1, 0, 2]); // correct pattern of numbers
@@ -15,14 +16,12 @@ console.log(Tibetan);
   // change to use effect
   function clickDescription(e) {
     const clickedBox = parseInt(e.target.dataset.badges);
-    if (!fillArray.includes(clickedBox)) {
+    if (!fillArray.includes(clickedBox) && clickedBox > -1) {
       setDescription(prev => prev = clickedBox);
       console.log(description);
 
-      const inputSquare = document.querySelectorAll('.inputParent');
-        inputSquare.forEach(box => {
-        box.style.backgroundColor = 'yellow';
-      })
+      const clickedDescription = document.querySelector('[data-badges="' + clickedBox + '"].descriptionBox');
+      clickedDescription.style.borderColor = 'lightblue';
     }
   }
 
@@ -32,8 +31,9 @@ console.log(Tibetan);
     const clickedElement = e.target;
     // add the description to its appropriate box => 
     // need to figure solution to adding description on top of another description, either put objects in specific index or change conditional
-    if (description > -1 && fillArray[clickedFillBox] === undefined) {
-      console.log(description);
+    if (description > -1 && fillArray[clickedFillBox] === undefined && clickedFillBox > -1 && clickedDescription.innerHTML !== '') {
+      console.log("description = " + description);
+      console.log(typeof clickedFillBox);
       console.log(clickedFillBox);
       const updatedFillArray = [...fillArray];
       // updatedFillArray.splice(clickedFillBox, 0, description);
@@ -47,8 +47,7 @@ console.log(Tibetan);
       // displays description in clicked empty box
       clickedElement.innerHTML = clickedDescription.innerHTML;
       clickedDescription.innerHTML = '';
-
-      // array needs to place description in the correct spot (correct splice)
+      clickedDescription.style.borderColor = 'rgb(0, 107, 139)'
     }
   }
 
@@ -121,12 +120,11 @@ console.log(Tibetan);
     function endGame() {
       const counter = document.querySelector('.winLossCounter');
       if (picturesArray.every((value, index) => value === fillArray[index])) {
-        // useEffect?
         console.log('win');
         endDisplay();
         counter.textContent = 'Full Match!';
       }
-      else if (fillArray.length === 3) {
+      else if (fillArray.length === 3 && !fillArray.includes(undefined)) {
         console.log('loss');
         endDisplay();
         counter.textContent = 'Try Again!';
@@ -141,8 +139,6 @@ console.log(Tibetan);
       endParent.appendChild(endButton);
 
       endButton.addEventListener('click', () => {
-        setDescription(prev => prev = -1);
-        setFillArray(prev => prev = []);
         window.location.reload();
       })
     }

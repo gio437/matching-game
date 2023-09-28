@@ -39,8 +39,9 @@ body {
   height: 14rem;
   width: 22rem;
   background-color: white;
-  border-width: 1rem;
-  border-color: black;
+  border-width: 0.6rem;
+  border-style: solid;
+  border-color: white;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
